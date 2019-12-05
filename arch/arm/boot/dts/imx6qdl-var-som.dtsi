@@ -194,6 +194,29 @@
 				 <&clks IMX6QDL_CLK_PLL2_PFD0_352M>;
 };
 
+&ecspi4 {
+ 	fsl,spi-num-chipselects = <3>;
+	cs-gpios = <&gpio3 27 0>, <&gpio3 24 0>, <&gpio3 25 0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pinctrl_ecspi4_1>;
+	status = "okay";
+	fpga2: fpga2_spidev@0 {
+		compatible = "spidev";
+		spi-max-frequency = <20000000>;
+		reg = <0>;
+	};
+	fpga3: fpga3_spidev@1 {
+		compatible = "spidev";
+		spi-max-frequency = <20000000>;
+		reg = <1>;
+	};
+	switch: switch_spidev@2 {
+		compatible = "spidev";
+		spi-max-frequency = <20000000>;
+		reg = <2>;
+	};
+};
+
 &ecspi3 {
 	fsl,spi-num-chipselects = <1>;
 	pinctrl-names = "default", "sleep";
@@ -656,6 +679,26 @@
 			>;
 		};
 
+		pinctrl_ecspi1_1: ecspi1grp {
+			fsl,pins = <
+				MX6QDL_PAD_DISP0_DAT22__ECSPI1_MISO	0x100b1
+				MX6QDL_PAD_DISP0_DAT21__ECSPI1_MOSI	0x100b1
+				MX6QDL_PAD_DISP0_DAT20__ECSPI1_SCLK	0x100b1
+				MX6QDL_PAD_DISP0_DAT23__GPIO5_IO17	0x100b1
+			>;
+		};
+
+		pinctrl_ecspi4_1: ecspi4grp {
+			fsl,pins = <
+				MX6QDL_PAD_EIM_D22__ECSPI4_MISO		0x100b1
+				MX6QDL_PAD_EIM_D28__ECSPI4_MOSI		0x100b1
+				MX6QDL_PAD_EIM_D21__ECSPI4_SCLK		0x100b1
+				MX6QDL_PAD_EIM_D29__GPIO3_IO29		0x100b1
+				MX6QDL_PAD_EIM_D24__GPIO3_IO24		0x100b1
+				MX6QDL_PAD_EIM_D27__GPIO3_IO27		0x100b1
+			>;
+		};
+
 		pinctrl_ecspi3_1: ecspi3grp {
 			fsl,pins = <
 				MX6QDL_PAD_DISP0_DAT2__ECSPI3_MISO	0x100b1
@@ -722,18 +765,12 @@
 
 /* Bluetooth Uart */
 &uart2 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_uart2_3>;
-	fsl,uart-has-rtscts;
-	status = "okay";
+	status = "disabled";
 };
 
 /* ttymxc2 UART */
 &uart3 {
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_uart3_2>;
-	fsl,uart-has-rtscts;
-	status = "okay";
+	status = "disabled";
 };
 
 &can1 {
